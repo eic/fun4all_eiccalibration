@@ -1,6 +1,6 @@
 ## -----------------------------------------------------------
-## adapted from YF: ion_35mrad_IP2_15Mar2021.txt (downloaded on 3/29/21)
-## https://gitlab.com/eic/escalate/g4e/-/blob/511b4f84c241abc4f2890c93807f0e12b72565fd/resources/ip8/mdi/ion_35mrad_IP2_15Mar2021.txt
+## adapted from YF: ion_IP8_10mai21.txt (downloaded on 6/08/21) 
+## https://gitlab.com/eic/escalate/g4e/-/blob/julia2/resources/ip8/mdi/ion_IP8_10mai21.txt
 ## for 275 GeV protons
 ##
 ##   name    center_x center_y center_z rin(z-in) rin(z-out)  dout   length   angle      B      gradient
