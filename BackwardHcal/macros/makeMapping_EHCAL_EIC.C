@@ -121,8 +121,8 @@ void makeMapping_EHCAL_EIC( TString setup="default" )
       femc_dz = 100; // cm
 
       /* Tower parameters */
-      tower_dx = 5.0; // cm
-      tower_dy = 5.0; // cm
+      tower_dx = 10.0; // cm
+      tower_dy = 10.0; // cm
       tower_dz = 90.0; // cm
     }
   else if ( setup == "default_offset" )
