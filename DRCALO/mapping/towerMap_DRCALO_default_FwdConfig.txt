@@ -2,9 +2,9 @@
 Gtype 0
 Quadratic_Detector 0
 Gr1_inner 20
-Gr1_outer 220
+Gr1_outer 50
 Gr2_inner 20
-Gr2_outer 220
+Gr2_outer 50
 Gdz 150
 Gx0 0
 Gy0 0

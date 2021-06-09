@@ -20,5 +20,5 @@ Center_Offset_y 0
 Scint_Diam 0.1
 Cerenkov_Diam 0.1
 Cerenkov_Material 0
-NotchCutout 1
+NotchCutout 0
 Absorber_Material 0

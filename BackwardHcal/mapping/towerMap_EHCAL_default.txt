@@ -1,13 +1,13 @@
 #Global detector geometry and transforamtion; lengths given in cm
 Gtype 1
 Gr1_inner 15
-Gr1_outer 160
+Gr1_outer 262
 Gr2_inner 15
-Gr2_outer 160
+Gr2_outer 262
 Gdz 100
 Gx0 0
 Gy0 0
-Gz0 -284
+Gz0 -360
 Grot_x 0
 Grot_y 0
 Grot_z 0
