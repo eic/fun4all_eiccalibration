@@ -111,13 +111,13 @@ void makeMapping_EHCAL_EIC( TString setup="default" )
       /* Global detector position / transformation */
       femc_x0 =  0.0; // cm,
       femc_y0 =  0.0; // cm,
-      femc_z0 = -284.0; // cm,
+      femc_z0 = -360.0; // cm,
 
       /* Detector envelope size (cone shape) */
       femc_rmin1 = 15; // cm
-      femc_rmax1 = 160; // cm
+      femc_rmax1 = 260; // cm
       femc_rmin2 = 15; // cm
-      femc_rmax2 = 160; // cm
+      femc_rmax2 = 260; // cm
       femc_dz = 100; // cm
 
       /* Tower parameters */
