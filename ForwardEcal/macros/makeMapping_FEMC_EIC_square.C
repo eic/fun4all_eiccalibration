@@ -4,9 +4,9 @@
 
 using namespace std;
 
-void makeMapping_FEMC_EIC( TString setup="asymmetric" )
+void makeMapping_FEMC_EIC_square( TString setup="FwdSquare")
 {
-
+  bool squarecutout = false;
   /* Global detector position / transformation */
   double femc_x0 = 0.0; // cm,
   double femc_y0 = 0.0; // cm,
@@ -144,6 +144,31 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric" )
       femc_rot_z0 =  0.0;
 
       /* Detector envelope size (cone shape) */
+      femc_rmin1 = 52.0; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmax1 = 182.655; // cm
+      femc_rmin2 = 52.0; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmax2 = 182.655; // cm
+      femc_dz = 36.5; // cm (FULL SIZE)
+
+      /* Tower parameters */
+      // From PHENIX EMCal JGL 12/27/2015
+      tower_dx = 5.535; // cm
+      tower_dy = 5.535; // cm
+      tower_dz = 36.3; // cm (FULL SIZE)
+    }
+  else if ( setup == "FwdSquare" )
+    {
+      squarecutout = true;
+      /* Global detector position / transformation */
+      femc_x0 =  0.0; // cm,
+      femc_y0 =  0.0; // cm,
+      femc_z0 = 310.0; // cm,
+
+      femc_rot_x0 =  0.0;
+      femc_rot_y0 =  0.0;
+      femc_rot_z0 =  0.0;
+
+      /* Detector envelope size (cone shape) */
       femc_rmin1 = 50.0; // cm - accomodate Mar 2020 EIC beam pipe
       femc_rmax1 = 182.655; // cm
       femc_rmin2 = 50.0; // cm - accomodate Mar 2020 EIC beam pipe
@@ -225,37 +250,54 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric" )
       for (int idx_k = 0; idx_k < n_towers_k; idx_k++)
 	{
 
-	  /* Calculate center position for tower */
-	  double xpos = xpos_j0_k0 + idx_j * tower_dx;
-	  double ypos = ypos_j0_k0 + idx_k * tower_dy;
-	  double zpos = 0;
+  /* Calculate center position for tower */
+  double xpos = xpos_j0_k0 + idx_j * tower_dx;
+  double ypos = ypos_j0_k0 + idx_k * tower_dy;
+  double zpos = 0;
 
-	  // check if all four corners are within envelope volume
-	  double r_corner_1 = sqrt( pow( xpos + tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
-	  double r_corner_2 = sqrt( pow( xpos - tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
-	  double r_corner_3 = sqrt( pow( xpos + tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
-	  double r_corner_4 = sqrt( pow( xpos - tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
-	  double r_corner_1_offset = sqrt( pow( xpos - offset_rmin_x + tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
-	  double r_corner_2_offset = sqrt( pow( xpos - offset_rmin_x - tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
-	  double r_corner_3_offset = sqrt( pow( xpos - offset_rmin_x + tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
-	  double r_corner_4_offset = sqrt( pow( xpos - offset_rmin_x - tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
 
-	  if ( r_corner_1 > femc_rmax1 ||
-	       r_corner_2 > femc_rmax1 ||
-	       r_corner_3 > femc_rmax1 ||
-	       r_corner_4 > femc_rmax1 )
-	    continue;
+  // check if all four corners are within envelope volume
+  double r_corner_1 = sqrt( pow( xpos + tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
+  double r_corner_2 = sqrt( pow( xpos - tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
+  double r_corner_3 = sqrt( pow( xpos + tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
+  double r_corner_4 = sqrt( pow( xpos - tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
 
-	  if ( r_corner_1_offset < femc_rmin1 ||
-	       r_corner_2_offset < femc_rmin1 ||
-	       r_corner_3_offset < femc_rmin1 ||
-	       r_corner_4_offset < femc_rmin1 )
-	    continue;
+  if ( r_corner_1 > femc_rmax1 ||
+        r_corner_2 > femc_rmax1 ||
+        r_corner_3 > femc_rmax1 ||
+        r_corner_4 > femc_rmax1 )
+    continue;
 
-	  fout << "Tower " << 2 << " " << idx_j << " " << idx_k << " " << idx_l << " " << xpos << " " << ypos << " " << zpos << " " << tower_dx << " " << tower_dy << " " << tower_dz << " 0 0 0" << endl;
-	  
-	  twr_count++; 
-	  
+  if(squarecutout){
+    double x_corner_1_offset = xpos - offset_rmin_x + tower_dx/2. ;
+    double x_corner_2_offset = xpos - offset_rmin_x - tower_dx/2. ;
+    double x_corner_3_offset = xpos - offset_rmin_x + tower_dx/2. ;
+    double x_corner_4_offset = xpos - offset_rmin_x - tower_dx/2. ;
+    double y_corner_1_offset = ypos + tower_dy/2.;
+    double y_corner_2_offset = ypos + tower_dy/2.;
+    double y_corner_3_offset = ypos - tower_dy/2.;
+    double y_corner_4_offset = ypos - tower_dy/2.;
+    if (  (abs(x_corner_1_offset) < femc_rmin1 && abs(y_corner_1_offset) < femc_rmin1) ||
+          (abs(x_corner_2_offset) < femc_rmin1 && abs(y_corner_2_offset) < femc_rmin1) ||
+          (abs(x_corner_3_offset) < femc_rmin1 && abs(y_corner_3_offset) < femc_rmin1) ||
+          (abs(x_corner_4_offset) < femc_rmin1 && abs(y_corner_4_offset) < femc_rmin1) )
+      continue;
+  } else {
+    double r_corner_1_offset = sqrt( pow( xpos - offset_rmin_x + tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
+    double r_corner_2_offset = sqrt( pow( xpos - offset_rmin_x - tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
+    double r_corner_3_offset = sqrt( pow( xpos - offset_rmin_x + tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
+    double r_corner_4_offset = sqrt( pow( xpos - offset_rmin_x - tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
+    if ( r_corner_1_offset < femc_rmin1 ||
+          r_corner_2_offset < femc_rmin1 ||
+          r_corner_3_offset < femc_rmin1 ||
+          r_corner_4_offset < femc_rmin1 )
+      continue;
+  }
+
+  fout << "Tower " << 2 << " " << idx_j << " " << idx_k << " " << idx_l << " " << xpos << " " << ypos << " " << zpos << " " << tower_dx << " " << tower_dy << " " << tower_dz << " 0 0 0" << endl;
+
+  twr_count++;
+
 	}
 
     }
