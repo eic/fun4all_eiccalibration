@@ -1,0 +1,24 @@
+#Global detector geometry and transforamtion; lengths given in cm
+Gtype 0 # unused variable
+Quadratic_Detector 0 # in case the DRCALO is used as inlay, it can be made quadratic
+Gr1_inner 20
+Gr1_outer 220
+Gr2_inner 20
+Gr2_outer 220
+Gdz 150
+Gx0 0
+Gy0 0
+Gz0 375
+Grot_x 0
+Grot_y 0
+Grot_z 0
+Gtower_dx 0.30 # size of tower with 2x2 fibers
+Gtower_dy 0.30
+Gtower_dz 150
+Center_Offset_x 10 # offset to account for tilted beampipe
+Center_Offset_y 0
+Scint_Diam 0.1 # diameter of scintillation fiber
+Cerenkov_Diam 0.1 # diameter of cerenkov fiber
+Cerenkov_Material 0 # cerenkov fiber material: 0=PMMA, 1=Quartz
+NotchCutout 1 # switch to make notched cutout for fibers
+Absorber_Material 2 # absorber material: 0=iron, 1=tungsten, 2=copper, 3=lead
