@@ -325,13 +325,13 @@ void makeMapping_FEMC_EIC_square( TString setup="FwdSquare_ROS")
         fout << "Tower " << 2 << " " << idx_j << " " << idx_k << " " << idx_l << " " << xpos << " " << ypos << " " << zpos << " " << tower_dx << " " << tower_dy << " " << tower_dz << " 0 0 0" << endl;
         twr_count++;
       } else {
-        for(int isubj=0; isubj<3; isubj++){
-          idtx_j = idx_j*3 + isubj;
+        for(int isubj=0; isubj<tower_ROS; isubj++){
+          idtx_j = idx_j*tower_ROS + isubj;
           float xpos_sub = (xpos-tower_dx/2) + isubj * (tower_dx/tower_ROS);
 
-          for(int isubk=0; isubk<3; isubk++){
+          for(int isubk=0; isubk<tower_ROS; isubk++){
             float ypos_sub = (ypos-tower_dy/2) + isubk * (tower_dy/tower_ROS);
-            idtx_k = idx_k*3 + isubk;
+            idtx_k = idx_k*tower_ROS + isubk;
             fout << "Tower " << 2 << " " << idtx_j << " " << idtx_k << " " << idx_l << " " << xpos_sub << " " << ypos_sub << " " << zpos << " " << tower_dx << " " << tower_dy << " " << tower_dz << " 0 0 0" << endl;
             twr_count++;
           }
