@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void makeMapping_FHCAL_EIC( TString setup="asymmetric" )
+void makeMapping_FHCAL_EIC( TString setup="asymmetric_XL" )
 {
 
   /* Global detector position / transformation */
@@ -165,6 +165,28 @@ void makeMapping_FHCAL_EIC( TString setup="asymmetric" )
       tower_dx = 10.0; // cm
       tower_dy = 10.0; // cm
       tower_dz = 100.0; // cm
+
+      offset_rmin_x = 10.0; // cm
+      offset_rmin_y = 0.0; // cm
+      }
+  else if ( setup == "asymmetric_XL" )
+    {
+      /* Global detector position / transformation */
+      femc_x0 =  0.0; // cm,
+      femc_y0 =  0.0; // cm,
+      femc_z0 = 420.0; // cm,
+
+      /* Detector envelope size (cone shape) */
+      femc_rmin1 = 17; // cm
+      femc_rmax1 = 262; // cm
+      femc_rmin2 = 17; // cm
+      femc_rmax2 = 262; // cm
+      femc_dz = 140; // cm
+
+      /* Tower parameters */
+      tower_dx = 10.0; // cm
+      tower_dy = 10.0; // cm
+      tower_dz = 140.0; // cm
 
       offset_rmin_x = 10.0; // cm
       offset_rmin_y = 0.0; // cm

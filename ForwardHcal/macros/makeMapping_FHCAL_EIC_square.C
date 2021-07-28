@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void makeMapping_FHCAL_EIC_square( TString setup="FwdSquare" )
+void makeMapping_FHCAL_EIC_square( TString setup="FwdSquare_XL" )
 {
   bool squarecutout = false;
 
@@ -167,6 +167,26 @@ void makeMapping_FHCAL_EIC_square( TString setup="FwdSquare" )
       tower_dx = 10.0; // cm
       tower_dy = 10.0; // cm
       tower_dz = 100.0; // cm
+    }
+  else if ( setup == "FwdSquare_XL" )
+    {
+      squarecutout = true;
+      /* Global detector position / transformation */
+      femc_x0 =  0.0; // cm,
+      femc_y0 =  0.0; // cm,
+      femc_z0 = 420.0; // cm,
+
+      /* Detector envelope size (cone shape) */
+      femc_rmin1 = 55; // cm
+      femc_rmax1 = 262; // cm
+      femc_rmin2 = 55; // cm
+      femc_rmax2 = 262; // cm
+      femc_dz = 140; // cm
+
+      /* Tower parameters */
+      tower_dx = 10.0; // cm
+      tower_dy = 10.0; // cm
+      tower_dz = 140.0; // cm
     }
   else if ( setup == "asymmetric" )
     {
