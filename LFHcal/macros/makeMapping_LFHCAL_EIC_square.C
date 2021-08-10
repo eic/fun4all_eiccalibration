@@ -11,7 +11,7 @@ void makeMapping_LFHCAL_EIC_square( TString setup="FwdSquare" )
   /* Global detector position / transformation */
   double lhcal_x0 = 0.0; // cm,
   double lhcal_y0 = 0.0; // cm,
-  double lhcal_z0 = 0.0; // cm,
+  double lhcal_z0 = 400.0; // cm,
 
   double lhcal_rot_x0 = 0.0;
   double lhcal_rot_y0 = 0.0;
@@ -22,12 +22,12 @@ void makeMapping_LFHCAL_EIC_square( TString setup="FwdSquare" )
   double lhcal_rmax1 = 0; // cm
   double lhcal_rmin2 = 0; // cm
   double lhcal_rmax2 = 0; // cm
-  double lhcal_dz = 0; // cm
+  double lhcal_dz = 100.; // cm
 
   /* Tower parameters */
-  double tower_dx = 0.0; // cm
-  double tower_dy = 0.0; // cm
-  double tower_dz = 0.0; // cm
+  double tower_dx = 5.0; // cm
+  double tower_dy = 5.0; // cm
+  double tower_dz = 100.0; // cm
 
   double scintthick = 0.4;
   double absthick   = 1.6;
@@ -38,107 +38,57 @@ void makeMapping_LFHCAL_EIC_square( TString setup="FwdSquare" )
 
   cout << "Setup selected: " << setup << endl;
 
-  if ( setup == "2x" )
-    {
-      /* Global detector position / transformation */
-      lhcal_x0 =  0.0; // cm,
-      lhcal_y0 =  0.0; // cm,
-      lhcal_z0 = 400.0; // cm,
-
+  if ( setup.Contains("2x") ){
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 14; // cm
       lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 14; // cm
       lhcal_rmax2 = 262; // cm
-      lhcal_dz = 100; // cm
 
       /* Tower parameters */
       tower_dx = 2.5; // cm
       tower_dy = 2.5; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "default" )
-    {
-      /* Global detector position / transformation */
-      lhcal_x0 =  0.0; // cm,
-      lhcal_y0 =  0.0; // cm,
-      lhcal_z0 = 400.0; // cm,
-
+  } else if ( setup.Contains("default") ){
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 14; // cm
       lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 14; // cm
       lhcal_rmax2 = 262; // cm
-      lhcal_dz = 100; // cm
 
-      /* Tower parameters */
-      tower_dx = 5.0; // cm
-      tower_dy = 5.0; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "wDR" )
-    {
-      /* Global detector position / transformation */
-      lhcal_x0 =  0.0; // cm,
-      lhcal_y0 =  0.0; // cm,
-      lhcal_z0 = 400.0; // cm,
-
+  } else if ( setup.Contains("wDR") ){
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 50; // cm
       lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 50; // cm
       lhcal_rmax2 = 262; // cm
-      lhcal_dz = 100; // cm
 
-      /* Tower parameters */
-      tower_dx = 5.0; // cm
-      tower_dy = 5.0; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "FwdSquare" )
-    {
+  } else if ( setup.Contains("FwdSquare") ){
       squarecutout = true;
-      /* Global detector position / transformation */
-      lhcal_x0 =  0.0; // cm,
-      lhcal_y0 =  0.0; // cm,
-      lhcal_z0 = 400.0; // cm,
-
+    
       /* Detector envelope size (cone shape) */
       lhcal_rmax1 = 262; // cm
       lhcal_rmax2 = 262; // cm
       /* Detector cutout size (square shape) */
       lhcal_rmin1 = 55; // cm
       lhcal_rmin2 = 55; // cm
-      lhcal_dz = 100; // cm
 
-      /* Tower parameters */
-      tower_dx = 5.0; // cm
-      tower_dy = 5.0; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "asymmetric" )
-    {
-      /* Global detector position / transformation */
-      lhcal_x0 =  0.0; // cm,
-      lhcal_y0 =  0.0; // cm,
-      lhcal_z0 = 400.0; // cm,
-
+  } else if ( setup.Contains("asymmetric") ){
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 17; // cm
       lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 17; // cm
       lhcal_rmax2 = 262; // cm
-      lhcal_dz = 100; // cm
-
-      /* Tower parameters */
-      tower_dx = 5.0; // cm
-      tower_dy = 5.0; // cm
-      tower_dz = 100.0; // cm
 
       offset_rmin_x = 10.0; // cm
       offset_rmin_y = 0.0; // cm
-      }
+  }
 
+  if (setup.Contains("long")){
+      lhcal_z0    = 420.0; // cm,
+      lhcal_dz    = 140.; // cm
+      tower_dz    = 140.; //cm
+  }
+  
   // NOTE: code below assumes tower_dx = tower_dy
   // Will need to be updated if that's not the case JGL 12/27/2015
   unsigned n_towers_j = 2 * ( (unsigned)( ( (lhcal_rmax1+0.5*tower_dx) /tower_dx) )) + 1;
