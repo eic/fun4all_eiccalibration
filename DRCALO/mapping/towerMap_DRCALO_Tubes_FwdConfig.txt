@@ -1,0 +1,24 @@
+#Global detector geometry and transforamtion; lengths given in cm
+Gtype 5
+Quadratic_Detector 0
+Gr1_inner 20
+Gr1_outer 50
+Gr2_inner 20
+Gr2_outer 50
+Gdz 150
+Gx0 0
+Gy0 0
+Gz0 375
+Grot_x 0
+Grot_y 0
+Grot_z 0
+Gtower_dx 0.50
+Gtower_dy 0.50
+Gtower_dz 150
+Center_Offset_x 10
+Center_Offset_y 0
+Scint_Diam 0.1
+Cerenkov_Diam 0.1
+Cerenkov_Material 0
+NotchCutout 1
+Absorber_Material 0
