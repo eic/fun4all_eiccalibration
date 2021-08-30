@@ -59,6 +59,16 @@ void makeMapping_LFHCAL_EIC( TString setup="2x" )
       lhcal_rmin2 = 14; // cm
       lhcal_rmax2 = 262; // cm
 
+  } else if ( setup.Contains("FwdConfig") ) {
+
+      /* Detector envelope size (cone shape) */
+      lhcal_rmin1 = 50; // cm
+      lhcal_rmax1 = 262; // cm
+      lhcal_rmin2 = 50; // cm
+      lhcal_rmax2 = 262; // cm
+      tower_dx = 5.535; // cm
+      tower_dy = 5.535; // cm
+
   }  else if ( setup.Contains("wDR") ){
 
       /* Detector envelope size (cone shape) */
