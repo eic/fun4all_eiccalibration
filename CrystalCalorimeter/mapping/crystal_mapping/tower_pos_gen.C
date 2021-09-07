@@ -30,7 +30,8 @@ void tower_pos_gen()
 //          PWO_OuterR = 53., // 200cm version
 //          PWO_OuterR = 75., // 200cm version, pure PbW04 CEMC
          PWO_OuterR = 61., // 200cm version, pure PbW04 SciGlass
-         PWO_InnerR = 10.,
+//          PWO_InnerR = 10.,
+         PWO_InnerR = 8.,
          Inner_mat = 0.5; 
   
   double Glass_carbon_Gap = 0.1,
@@ -46,7 +47,8 @@ void tower_pos_gen()
           Glass_OuterR = 75., // 200cm version CEMC barrel
          Outer_mat = 7.5; 
   
-  double inner_glo_zpos = -200., // 250.cm alternative
+double inner_glo_zpos = -185., // 250.cm alternative
+// double inner_glo_zpos = -200., // 250.cm alternative
          outer_glo_zpos = inner_glo_zpos - (Glass_Thickness - PWO_Thickness) / 2.;
 
   char Y_N;
@@ -199,98 +201,90 @@ void tower_pos_gen()
   ofs << "Gcolor_B " << 1.0 << endl;
   ofs << "#Tower: type, idx_j, idx_k, idx_l, x[cm], y[cm], z[cm], dx[cm], dy[cm], dz[cm], rot_x, rot_y, rot_z" << endl;
   
-  for(int colIndex = 0 ; colIndex < towersInRow ; colIndex++)
-    {
-      for(int rowIndex = 0 ; rowIndex < towersInRow ; rowIndex++)
-	{
-	  // double x = leftTowerPos + colIndex * (PWO_Width + 2. * PWO_Gap);
-	  // double y = topTowerPos + rowIndex * (PWO_Width + 2. * PWO_Gap);
-	  double x = leftTowerPos + colIndex * (Glass_Width + 2. * Glass_Gap);
-	  double y = topTowerPos + rowIndex * (Glass_Width + 2. * Glass_Gap);
-	  double z = inner_glo_zpos;
-	  //	  double z = -250.;
-	  double Cry_R = std::sqrt(x * x + y * y);
-	  double inner_r = 0.;
-	  
-	  //	  if ( (std::abs(y) < PWO_OuterR && std::abs(x) < PWO_OuterR) && (std::abs(y) > PWO_InnerR || std::abs(x) > PWO_InnerR) )
-	  //	  if ( (Cry_R < PWO_OuterR) && (std::abs(y) > (PWO_InnerR + 2.) || std::abs(x) > (PWO_InnerR + 2.) ) )
-	  if ( (Cry_R < PWO_OuterR) && (Cry_R > PWO_InnerR) )
-	    {
-	      int index_dis = 0;
-	      
-	      for(int i = 0 ; i < 2 ; i++)
-		{
-		  for(int j = 0 ; j < 2 ; j++)
-		    {
-		      double x_cry, y_cry;
-		      int cry_col_index, cry_row_index;
+  for(int colIndex = 0 ; colIndex < towersInRow ; colIndex++){
+    for(int rowIndex = 0 ; rowIndex < towersInRow ; rowIndex++)	{
+      // double x = leftTowerPos + colIndex * (PWO_Width + 2. * PWO_Gap);
+      // double y = topTowerPos + rowIndex * (PWO_Width + 2. * PWO_Gap);
+      double x = leftTowerPos + colIndex * (Glass_Width + 2. * Glass_Gap);
+      double y = topTowerPos + rowIndex * (Glass_Width + 2. * Glass_Gap);
+      double z = inner_glo_zpos;
+      //	  double z = -250.;
+      double Cry_R = std::sqrt(x * x + y * y);
+      double inner_r = 0.;
+      
+      //	  if ( (std::abs(y) < PWO_OuterR && std::abs(x) < PWO_OuterR) && (std::abs(y) > PWO_InnerR || std::abs(x) > PWO_InnerR) )
+      //	  if ( (Cry_R < PWO_OuterR) && (std::abs(y) > (PWO_InnerR + 2.) || std::abs(x) > (PWO_InnerR + 2.) ) )
+      if ( (Cry_R < PWO_OuterR) && (Cry_R > PWO_InnerR) ){
+        int index_dis = 0;
+          
+        for(int i = 0 ; i < 2 ; i++) {
+          for(int j = 0 ; j < 2 ; j++) {
+            double x_cry, y_cry;
+            int cry_col_index, cry_row_index;
 
-		      if( (i==0) && (j==0) )
-			{
-			  x_cry = x - (PWO_Width + 2. * PWO_Gap) / 2.;
-			  y_cry = y - (PWO_Width + 2. * PWO_Gap) / 2.;
-			  inner_r = std::sqrt(x_cry * x_cry + y_cry * y_cry);
-			  if(inner_r < PWO_InnerR){
-//           cout << inner_r << endl;
-			    continue;
-        }
-			  cry_col_index = colIndex * 2 + i;
-			  cry_row_index = rowIndex * 2 + j;
-			}
-		      else if( (i==0) && (j==1) )
-			{
-			  x_cry = x - (PWO_Width + 2. * PWO_Gap) / 2.;
-			  y_cry = y + (PWO_Width + 2. * PWO_Gap) / 2.;
-			  inner_r = std::sqrt(x_cry * x_cry + y_cry * y_cry);
-			  if(inner_r < PWO_InnerR){
-//           cout << inner_r << endl;
-			    continue;
-        }
-			  cry_col_index = colIndex * 2 + i;
-			  cry_row_index = rowIndex * 2 + j;
-			}
-		      else if( (i==1) && (j==0) )
-			{
-			  x_cry = x + (PWO_Width + 2. * PWO_Gap) / 2.;
-			  y_cry = y - (PWO_Width + 2. * PWO_Gap) / 2.;
-			  inner_r = std::sqrt(x_cry * x_cry + y_cry * y_cry);
-			  if(inner_r < PWO_InnerR){
-//           cout << inner_r << endl;
-			    continue;
-        }
-			  cry_col_index = colIndex * 2 + i;
-			  cry_row_index = rowIndex * 2 + j;
-			}
-		      else if( (i==1) && (j==1) )
-			{
-			  x_cry = x + (PWO_Width + 2. * PWO_Gap) / 2.;
-			  y_cry = y + (PWO_Width + 2. * PWO_Gap) / 2.;
-			  inner_r = std::sqrt(x_cry * x_cry + y_cry * y_cry);
-			  if(inner_r < PWO_InnerR){
-//           cout << inner_r << endl;
-			    continue;
-        }
-			  cry_col_index = colIndex * 2 + i;
-			  cry_row_index = rowIndex * 2 + j;
-			}
+            if( (i==0) && (j==0) ) {
+              x_cry = x - (PWO_Width + 2. * PWO_Gap) / 2.;
+              y_cry = y - (PWO_Width + 2. * PWO_Gap) / 2.;
+              inner_r = std::sqrt(x_cry * x_cry + y_cry * y_cry);
+              if(inner_r < PWO_InnerR){
+      //           cout << inner_r << endl;
+                continue;
+              }
+              cry_col_index = colIndex * 2 + i;
+              cry_row_index = rowIndex * 2 + j;
+            } else if( (i==0) && (j==1) ) {
+              x_cry = x - (PWO_Width + 2. * PWO_Gap) / 2.;
+              y_cry = y + (PWO_Width + 2. * PWO_Gap) / 2.;
+              inner_r = std::sqrt(x_cry * x_cry + y_cry * y_cry);
+              if(inner_r < PWO_InnerR){
+      //           cout << inner_r << endl;
+                continue;
+              }
+              cry_col_index = colIndex * 2 + i;
+              cry_row_index = rowIndex * 2 + j;
+            } else if( (i==1) && (j==0) ){
+              x_cry = x + (PWO_Width + 2. * PWO_Gap) / 2.;
+              y_cry = y - (PWO_Width + 2. * PWO_Gap) / 2.;
+              inner_r = std::sqrt(x_cry * x_cry + y_cry * y_cry);
+              if(inner_r < PWO_InnerR){
+      //           cout << inner_r << endl;
+                continue;
+              }
+              cry_col_index = colIndex * 2 + i;
+              cry_row_index = rowIndex * 2 + j;
+            } else if( (i==1) && (j==1) ) {
+              x_cry = x + (PWO_Width + 2. * PWO_Gap) / 2.;
+              y_cry = y + (PWO_Width + 2. * PWO_Gap) / 2.;
+              inner_r = std::sqrt(x_cry * x_cry + y_cry * y_cry);
+              if(inner_r < PWO_InnerR){
+      //           cout << inner_r << endl;
+                continue;
+              }
+              cry_col_index = colIndex * 2 + i;
+              cry_row_index = rowIndex * 2 + j;
+            }
 
-		      int code = 1000 * cry_col_index + cry_row_index;
+            int code = 1000 * cry_col_index + cry_row_index;
 
-		      ofs << "Tower " << 0 << " ";
-		      ofs << cry_col_index << " " << cry_row_index << " " << 0 << " ";
-		      ofs << x_cry << " " << y_cry << " " << z << " ";
-		      ofs << PWO_Width << " " << PWO_Width << " " << PWO_Thickness << " ";
-		      ofs << 0 << " " << 0 << " " << 0 << endl;
-	      
-		      towerIndex++;
-		      count++;
-		      
-		    }
-		} // replace the glass pos to the crystal ones
-	    } // inner range 
-	  
-	}
+            ofs << "Tower " << 0 << " ";
+            ofs << cry_col_index << " " << cry_row_index << " " << 0 << " ";
+            ofs << x_cry << " " << y_cry << " " << z << " ";
+            ofs << PWO_Width << " " << PWO_Width << " " << PWO_Thickness << " ";
+            ofs << 0 << " " << 0 << " " << 0 << endl;
+          
+            towerIndex++;
+            count++;
+            
+          }
+        } // replace the glass pos to the crystal ones
+      } else if (Cry_R <= PWO_InnerR) { // inner range 
+        cout << "rejected inner: "<<  colIndex << "\t"<< rowIndex << "\t" << Cry_R << endl;
+      } else if (Cry_R >= PWO_OuterR) { // inner range 
+        cout << "rejected outer: "<<  colIndex << "\t"<< rowIndex << "\t" << Cry_R << endl;
+        
+      }
     }
+  }
 
   ofs.close();
   towerIndex = 0;
