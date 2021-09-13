@@ -140,7 +140,9 @@ void makeMapping_LFHCAL_EIC( TString setup="2x" )
   fout << "nlayerspertowerseg " << nLayerPerSeg << endl;
   fout << "thickness_absorber " << absthick << endl;
   fout << "thickness_scintillator " << scintthick << endl;
-
+  fout << "xoffset " << offset_rmin_x << endl;
+  fout << "yoffset " << offset_rmin_y << endl;
+  
   /* Tower mapping */
   fout << "#Tower type,idx_j,idx_k,idx_l,x[cm],y[cm],z[cm],dx[cm],dy[cm],dz[cm],rot_x,rot_y,rot_z" << endl;
 

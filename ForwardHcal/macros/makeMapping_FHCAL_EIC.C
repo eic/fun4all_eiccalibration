@@ -10,7 +10,7 @@ void makeMapping_FHCAL_EIC( TString setup="asymmetric_XL" )
   /* Global detector position / transformation */
   double femc_x0 = 0.0; // cm,
   double femc_y0 = 0.0; // cm,
-  double femc_z0 = 0.0; // cm,
+  double femc_z0 = 400.0; // cm,
 
   double femc_rot_x0 = 0.0;
   double femc_rot_y0 = 0.0;
@@ -18,179 +18,86 @@ void makeMapping_FHCAL_EIC( TString setup="asymmetric_XL" )
 
   /* Detector envelope size (cone shape) */
   double femc_rmin1 = 0; // cm
-  double femc_rmax1 = 0; // cm
+  double femc_rmax1 = 262.; // cm
   double femc_rmin2 = 0; // cm
-  double femc_rmax2 = 0; // cm
-  double femc_dz = 0; // cm
+  double femc_rmax2 = 262.; // cm
+  double femc_dz = 100; // cm
 
   /* Tower parameters */
-  double tower_dx = 0.0; // cm
-  double tower_dy = 0.0; // cm
-  double tower_dz = 0.0; // cm
+  double tower_dx = 10.0; // cm
+  double tower_dy = 10.0; // cm
+  double tower_dz = 100.0; // cm
 
   double offset_rmin_x = 0.0; // cm
   double offset_rmin_y = 0.0; // cm
 
   cout << "Setup selected: " << setup << endl;
 
-  if ( setup == "2x" )
-    {
-      /* Global detector position / transformation */
-      femc_x0 =  0.0; // cm,
-      femc_y0 =  0.0; // cm,
-      femc_z0 = 400.0; // cm,
-
+  if ( setup == "2x" ){
       /* Detector envelope size (cone shape) */
       femc_rmin1 = 14; // cm
-      femc_rmax1 = 262; // cm
       femc_rmin2 = 14; // cm
-      femc_rmax2 = 262; // cm
+
+      /* Tower parameters */
+      tower_dx = tower_dx/2.; // cm
+      tower_dy = tower_dy/2.; // cm
+  } else if ( setup == "4x" ) {
+      /* Detector envelope size (cone shape) */
+      femc_rmin1 = 14; // cm
+      femc_rmin2 = 14; // cm
       femc_dz = 100; // cm
 
       /* Tower parameters */
-      tower_dx = 5.0; // cm
-      tower_dy = 5.0; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "4x" )
-    {
-      /* Global detector position / transformation */
-      femc_x0 =  0.0; // cm,
-      femc_y0 =  0.0; // cm,
-      femc_z0 = 400.0; // cm,
-
-      /* Detector envelope size (cone shape) */
-      femc_rmin1 = 14; // cm
-      femc_rmax1 = 262; // cm
-      femc_rmin2 = 14; // cm
-      femc_rmax2 = 262; // cm
-      femc_dz = 100; // cm
-
-      /* Tower parameters */
-      tower_dx = 2.5; // cm
-      tower_dy = 2.5; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "2xdefeta" )
-    {
-      /* Global detector position / transformation */
-      femc_x0 =  0.0; // cm,
-      femc_y0 =  0.0; // cm,
-      femc_z0 = 400.0; // cm,
-
+      tower_dx = tower_dx/4.; // cm
+      tower_dy = tower_dy/4.; // cm
+  } else if ( setup == "2xdefeta" ){
       /* Detector envelope size (cone shape) */
       femc_rmin1 = 23; // cm
-      femc_rmax1 = 262; // cm
       femc_rmin2 = 23; // cm
-      femc_rmax2 = 262; // cm
-      femc_dz = 100; // cm
 
       /* Tower parameters */
-      tower_dx = 5.0; // cm
-      tower_dy = 5.0; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "4xdefeta" )
-    {
-      /* Global detector position / transformation */
-      femc_x0 =  0.0; // cm,
-      femc_y0 =  0.0; // cm,
-      femc_z0 = 400.0; // cm,
-
+      tower_dx = tower_dx/2.; // cm
+      tower_dy = tower_dy/2.; // cm
+  } else if ( setup == "4xdefeta" ){
       /* Detector envelope size (cone shape) */
       femc_rmin1 = 23; // cm
-      femc_rmax1 = 262; // cm
       femc_rmin2 = 23; // cm
-      femc_rmax2 = 262; // cm
-      femc_dz = 100; // cm
-
       /* Tower parameters */
-      tower_dx = 2.5; // cm
-      tower_dy = 2.5; // cm
+      tower_dx = tower_dx/4.; // cm
+      tower_dy = tower_dy/4.; // cm
       tower_dz = 100.0; // cm
-    }
-  else if ( setup == "default" )
-    {
-      /* Global detector position / transformation */
-      femc_x0 =  0.0; // cm,
-      femc_y0 =  0.0; // cm,
-      femc_z0 = 400.0; // cm,
-
+  } else if ( setup == "default" ) {
       /* Detector envelope size (cone shape) */
       femc_rmin1 = 14; // cm
-      femc_rmax1 = 262; // cm
       femc_rmin2 = 14; // cm
-      femc_rmax2 = 262; // cm
-      femc_dz = 100; // cm
-
-      /* Tower parameters */
-      tower_dx = 10.0; // cm
-      tower_dy = 10.0; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "wDR" )
-    {
-      /* Global detector position / transformation */
-      femc_x0 =  0.0; // cm,
-      femc_y0 =  0.0; // cm,
-      femc_z0 = 400.0; // cm,
-
+  } else if ( setup == "wDR" ){
       /* Detector envelope size (cone shape) */
       femc_rmin1 = 50; // cm
-      femc_rmax1 = 262; // cm
       femc_rmin2 = 50; // cm
-      femc_rmax2 = 262; // cm
-      femc_dz = 100; // cm
-
-      /* Tower parameters */
-      tower_dx = 10.0; // cm
-      tower_dy = 10.0; // cm
-      tower_dz = 100.0; // cm
-    }
-  else if ( setup == "asymmetric" )
-    {
-      /* Global detector position / transformation */
-      femc_x0 =  0.0; // cm,
-      femc_y0 =  0.0; // cm,
-      femc_z0 = 400.0; // cm,
-
+  } else if ( setup == "asymmetric" ){
       /* Detector envelope size (cone shape) */
       femc_rmin1 = 17; // cm
-      femc_rmax1 = 262; // cm
       femc_rmin2 = 17; // cm
-      femc_rmax2 = 262; // cm
-      femc_dz = 100; // cm
-
-      /* Tower parameters */
-      tower_dx = 10.0; // cm
-      tower_dy = 10.0; // cm
-      tower_dz = 100.0; // cm
 
       offset_rmin_x = 10.0; // cm
-      offset_rmin_y = 0.0; // cm
-      }
-  else if ( setup == "asymmetric_XL" )
-    {
-      /* Global detector position / transformation */
-      femc_x0 =  0.0; // cm,
-      femc_y0 =  0.0; // cm,
+  } else if ( setup == "IP6-asymmetric" ){
+      /* Detector envelope size (cone shape) */
+      femc_rmin1 = 17; // cm
+      femc_rmin2 = 17; // cm
+
+      offset_rmin_x = -10.0; // cm
+  } else if ( setup == "asymmetric_XL" ){
       femc_z0 = 420.0; // cm,
 
       /* Detector envelope size (cone shape) */
       femc_rmin1 = 17; // cm
-      femc_rmax1 = 262; // cm
       femc_rmin2 = 17; // cm
-      femc_rmax2 = 262; // cm
-      femc_dz = 140; // cm
 
       /* Tower parameters */
-      tower_dx = 10.0; // cm
-      tower_dy = 10.0; // cm
       tower_dz = 140.0; // cm
 
       offset_rmin_x = 10.0; // cm
-      offset_rmin_y = 0.0; // cm
-      }
+  }
 
   // NOTE: code below assumes tower_dx = tower_dy
   // Will need to be updated if that's not the case JGL 12/27/2015
@@ -227,6 +134,8 @@ void makeMapping_FHCAL_EIC( TString setup="asymmetric_XL" )
   fout << "Gtower_dx " << tower_dx << endl;
   fout << "Gtower_dy " << tower_dy << endl;
   fout << "Gtower_dz " << tower_dz << endl;
+  fout << "xoffset " << offset_rmin_x << endl;
+  fout << "yoffset " << offset_rmin_y << endl;
 
   /* Tower mapping */
   fout << "#Tower type,idx_j,idx_k,idx_l,x[cm],y[cm],z[cm],dx[cm],dy[cm],dz[cm],rot_x,rot_y,rot_z" << endl;

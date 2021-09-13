@@ -18,6 +18,8 @@ Gtower_dz 140
 nlayerspertowerseg 10
 thickness_absorber 1.6
 thickness_scintillator 0.4
+xoffset 10
+yoffset 0
 #Tower type,idx_j,idx_k,idx_l,x[cm],y[cm],z[cm],dx[cm],dy[cm],dz[cm],rot_x,rot_y,rot_z
 Tower 0	2	44	0	-255	-45	0	5	5	140	0	0	0
 Tower 0	2	45	0	-255	-40	0	5	5	140	0	0	0
