@@ -76,7 +76,15 @@ void makeMapping_LFHCAL_EIC( TString setup="2x" )
       lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 50; // cm
       lhcal_rmax2 = 262; // cm
-
+  } else if ( setup.Contains("IP6-asymmetric") ) {
+      /* Detector envelope size (cone shape) */
+      lhcal_rmin1 = 17; // cm
+      lhcal_rmax1 = 262; // cm
+      lhcal_rmin2 = 17; // cm
+      lhcal_rmax2 = 262; // cm
+      
+      offset_rmin_x = -10.0; // cm
+      offset_rmin_y = 0.0; // cm
   } else if ( setup.Contains("asymmetric") ) {
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 17; // cm
