@@ -65,45 +65,45 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric_ROS" )
   else if ( setup == "IP6-asymmetric" )
     {
       /* Detector envelope size (cone shape) */
-      femc_rmin1 = 20.0; // cm - accomodate Mar 2020 EIC beam pipe
-      femc_rmin2 = 20.0; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmin1 = 11.5; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmin2 = 11.5; // cm - accomodate Mar 2020 EIC beam pipe
 
-      offset_rmin_x = -10.0; // cm
+      offset_rmin_x = -7.1; // cm
       offset_rmin_y = 0.0; // cm
     }
   else if ( setup == "asymmetric" )
     {
       /* Detector envelope size (cone shape) */
-      femc_rmin1 = 20.0; // cm - accomodate Mar 2020 EIC beam pipe
-      femc_rmin2 = 20.0; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmin1 = 11.5; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmin2 = 11.5; // cm - accomodate Mar 2020 EIC beam pipe
 
-      offset_rmin_x = 10.0; // cm
+      offset_rmin_x = 7.1; // cm
       offset_rmin_y = 0.0; // cm
     }
   else if ( setup == "IP6-asymmetric_ROS" )
     {
       /* Detector envelope size (cone shape) */
-      femc_rmin1 = 20.0; // cm - accomodate Mar 2020 EIC beam pipe
-      femc_rmin2 = 20.0; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmin1 = 11.; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmin2 = 11.; // cm - accomodate Mar 2020 EIC beam pipe
 
       /* Tower parameters */
       // From PHENIX EMCal JGL 12/27/2015
       tower_ROS = 3.; // readout-separated
 
-      offset_rmin_x = -10.0; // cm
+      offset_rmin_x = -6.3; // cm
       offset_rmin_y = 0.0; // cm
     }
   else if ( setup == "asymmetric_ROS" )
     {
       /* Detector envelope size (cone shape) */
-      femc_rmin1 = 20.0; // cm - accomodate Mar 2020 EIC beam pipe
-      femc_rmin2 = 20.0; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmin1 = 11.5; // cm - accomodate Mar 2020 EIC beam pipe
+      femc_rmin2 = 11.5; // cm - accomodate Mar 2020 EIC beam pipe
 
       /* Tower parameters */
       // From PHENIX EMCal JGL 12/27/2015
       tower_ROS = 3.; // readout-separated
 
-      offset_rmin_x = 10.0; // cm
+      offset_rmin_x = 7.1; // cm
       offset_rmin_y = 0.0; // cm
     }
   else if ( setup == "wDR" )
@@ -137,9 +137,9 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric_ROS" )
   fout << "#Global detector geometry and transforamtion; lengths given in cm" << endl;
   fout << "Gtype " << 2 << endl;
   fout << "Gr1_inner " << femc_rmin1 << endl;
-  fout << "Gr1_outer " << femc_rmax1 << endl;
+  fout << "Gr1_outer " << Form("%5.5f",femc_rmax1+0.1) << endl;
   fout << "Gr2_inner " << femc_rmin2 << endl;
-  fout << "Gr2_outer " << femc_rmax2 << endl;
+  fout << "Gr2_outer " << Form("%5.5f",femc_rmax2+0.1) << endl;
   fout << "Gdz " << femc_dz << endl;
   fout << "Gx0 " << femc_x0 << endl;
   fout << "Gy0 " << femc_y0 << endl;
@@ -147,8 +147,13 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric_ROS" )
   fout << "Grot_x " << femc_rot_x0 << endl;
   fout << "Grot_y " << femc_rot_y0 << endl;
   fout << "Grot_z " << femc_rot_z0 << endl;
-  fout << "Gtower2_dx " << tower_dx/tower_ROS << endl;
-  fout << "Gtower2_dy " << tower_dy/tower_ROS << endl;
+  if (tower_ROS > 1){
+    fout << "Gtower2_dx " << tower_dx/tower_ROS << endl;
+    fout << "Gtower2_dy " << tower_dy/tower_ROS << endl;
+  } else {
+    fout << "Gtower2_dx " << tower_dx << endl;
+    fout << "Gtower2_dy " << tower_dy << endl;    
+  }
   fout << "Gtower2_dz " << tower_dz << endl;
   fout << "xoffset " << offset_rmin_x << endl;
   fout << "yoffset " << offset_rmin_y << endl;
@@ -173,24 +178,27 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric_ROS" )
   unsigned idx_l = 0;
   unsigned idtx_j = 0;
   unsigned idtx_k = 0;
-
+  double halfNtowersize = tower_dy/2;
+  double towersize    = tower_dy/tower_ROS;
+  
   for (int idx_j = 0; idx_j < n_towers_j; idx_j++){
     for (int idx_k = 0; idx_k < n_towers_k; idx_k++){
       /* Calculate center position for tower */
       double xpos = xpos_j0_k0 + idx_j * tower_dx;
       double ypos = ypos_j0_k0 + idx_k * tower_dy;
       double zpos = 0;
-
+      
+      
       // check if all four corners are within envelope volume
-      double r_corner_1 = sqrt( pow( xpos + tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
-      double r_corner_2 = sqrt( pow( xpos - tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
-      double r_corner_3 = sqrt( pow( xpos + tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
-      double r_corner_4 = sqrt( pow( xpos - tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
-      double r_corner_1_offset = sqrt( pow( xpos - offset_rmin_x + tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
-      double r_corner_2_offset = sqrt( pow( xpos - offset_rmin_x - tower_dx/2. , 2 ) + pow( ypos + tower_dy/2. , 2 ) );
-      double r_corner_3_offset = sqrt( pow( xpos - offset_rmin_x + tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
-      double r_corner_4_offset = sqrt( pow( xpos - offset_rmin_x - tower_dx/2. , 2 ) + pow( ypos - tower_dy/2. , 2 ) );
-
+      double r_corner_1 = sqrt( pow( xpos + halfNtowersize , 2 ) + pow( ypos + halfNtowersize , 2 ) );
+      double r_corner_2 = sqrt( pow( xpos - halfNtowersize , 2 ) + pow( ypos + halfNtowersize , 2 ) );
+      double r_corner_3 = sqrt( pow( xpos + halfNtowersize , 2 ) + pow( ypos - halfNtowersize , 2 ) );
+      double r_corner_4 = sqrt( pow( xpos - halfNtowersize , 2 ) + pow( ypos - halfNtowersize , 2 ) );
+      double r_corner_1_offset = sqrt( pow( xpos - offset_rmin_x + tower_dx/2. , 2 ) + pow( ypos + halfNtowersize , 2 ) );
+      double r_corner_2_offset = sqrt( pow( xpos - offset_rmin_x - tower_dx/2. , 2 ) + pow( ypos + halfNtowersize , 2 ) );
+      double r_corner_3_offset = sqrt( pow( xpos - offset_rmin_x + tower_dx/2. , 2 ) + pow( ypos - halfNtowersize , 2 ) );
+      double r_corner_4_offset = sqrt( pow( xpos - offset_rmin_x - tower_dx/2. , 2 ) + pow( ypos - halfNtowersize , 2 ) );
+      
       if ( r_corner_1 > femc_rmax1 ||
           r_corner_2 > femc_rmax1 ||
           r_corner_3 > femc_rmax1 ||
@@ -203,17 +211,37 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric_ROS" )
           r_corner_4_offset < femc_rmin1 )
         continue;
       if(tower_ROS==1){
-        fout << "Tower " << 2 << " " << idx_j << " " << idx_k << " " << idx_l << " " << xpos << " " << ypos << " " << zpos << " " << tower_dx << " " << tower_dy << " " << tower_dz << " 0 0 0" << endl;
+        fout << "Tower " << 2 << " " << idx_j << " " << idx_k << " " << idx_l << " " << Form("%4.5f",xpos) << " " << Form("%4.5f",ypos) << " " << zpos << " " << tower_dx << " " << tower_dy << " " << tower_dz << " 0 0 0" << endl;
         twr_count++;
       } else {
         for(int isubj=0; isubj<tower_ROS; isubj++){
           idtx_j = idx_j*tower_ROS + isubj;
-          float xpos_sub = (xpos-tower_dx/2) + isubj * (tower_dx/tower_ROS);
-
+          double xpos_sub = (double)(xpos-halfNtowersize) + (double)((isubj+0.5) * towersize);
+          
           for(int isubk=0; isubk<tower_ROS; isubk++){
-            float ypos_sub = (ypos-tower_dy/2) + isubk * (tower_dy/tower_ROS);
+            double ypos_sub = (double)(ypos-halfNtowersize) + (double)((isubk+0.5) * towersize);
             idtx_k = idx_k*tower_ROS + isubk;
-            fout << "Tower " << 2 << " " << idtx_j << " " << idtx_k << " " << idx_l << " " << xpos_sub << " " << ypos_sub << " " << zpos << " " << tower_dx << " " << tower_dy << " " << tower_dz << " 0 0 0" << endl;
+//             if (idtx_j == 167 && (idtx_k == 43 || idtx_k == 44)) 
+//             cout << xpos_sub << "\t" << idx_k << "\t" << isubk << "\t"  << ypos << "\t"<< Form("%4.5f",(double)(ypos-(tower_dy/2.)))  << "\t"<< Form("%4.5f",ypos_sub) << "\t" << (double)(isubk * towersize)<<endl;
+            double r_corner_5 = sqrt( pow( xpos_sub + towersize/2 , 2 ) + pow( ypos_sub + towersize/2 , 2 ) );
+            double r_corner_6 = sqrt( pow( xpos_sub - towersize/2 , 2 ) + pow( ypos_sub + towersize/2 , 2 ) );
+            double r_corner_7 = sqrt( pow( xpos_sub + towersize/2 , 2 ) + pow( ypos_sub - towersize/2 , 2 ) );
+            double r_corner_8 = sqrt( pow( xpos_sub - towersize/2 , 2 ) + pow( ypos_sub - towersize/2 , 2 ) );
+            if ( r_corner_5 > femc_rmax1 ||
+                r_corner_6 > femc_rmax1 ||
+                r_corner_7 > femc_rmax1 ||
+                r_corner_8 > femc_rmax1 )
+              cout << "bananas ... "<< idtx_j << "\t" << idtx_k << "\t" << r_corner_5 << "\t" << r_corner_6 << "\t" << r_corner_7 << "\t" << r_corner_8 << "\t" << femc_rmax1 << endl;
+
+            
+            if (idtx_j == 112 && (idtx_k == 0 )) { // || idtx_k == 1)
+              cout << "****************************" << endl;
+            cout << xpos_sub << "\t" << idx_k << "\t" << isubk << "\t"  << ypos << "\t"<< Form("%4.5f",(double)(ypos-(halfNtowersize)))  << "\t"<< Form("%4.5f",ypos_sub) << "\t" << (double)(isubk * towersize)<<endl;
+              cout << xpos << "\t" << ypos << "\t" << tower_dx/2. << "\t" << r_corner_1 << "\t" << r_corner_2 << "\t" << r_corner_3 << "\t" << r_corner_4 << "\t" << femc_rmax1 << endl;
+              cout << "Tower " << 2 << " " << idtx_j << " " << idtx_k << " " << idx_l << " " << Form("%4.5f",xpos_sub) << " " << Form("%4.5f",ypos_sub) << " " << zpos << " " << Form("%4.5f",towersize) << " " << Form("%4.5f",towersize) << " " << tower_dz << " 0 0 0" << endl;
+              
+            }
+            fout << "Tower " << 2 << " " << idtx_j << " " << idtx_k << " " << idx_l << " " << Form("%4.5f",xpos_sub) << " " << Form("%4.5f",ypos_sub) << " " << zpos << " " << Form("%4.5f",towersize) << " " << Form("%4.5f",towersize) << " " << tower_dz << " 0 0 0" << endl;
             twr_count++;
           }
         }

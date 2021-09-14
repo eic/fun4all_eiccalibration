@@ -120,10 +120,10 @@ void makeMapping_FHCAL_EIC( TString setup="asymmetric_XL" )
   /* Global detector transformation */
   fout << "#Global detector geometry and transforamtion; lengths given in cm" << endl;
   fout << "Gtype " << 1 << endl;
-  fout << "Gr1_inner " << femc_rmin1 << endl;
-  fout << "Gr1_outer " << femc_rmax1 << endl;
-  fout << "Gr2_inner " << femc_rmin2 << endl;
-  fout << "Gr2_outer " << femc_rmax2 << endl;
+  fout << "Gr1_inner " << femc_rmin1-0.05 << endl;
+  fout << "Gr1_outer " << femc_rmax1+0.1 << endl;
+  fout << "Gr2_inner " << femc_rmin2-0.05 << endl;
+  fout << "Gr2_outer " << femc_rmax2+0.1 << endl;
   fout << "Gdz " << femc_dz << endl;
   fout << "Gx0 " << femc_x0 << endl;
   fout << "Gy0 " << femc_y0 << endl;

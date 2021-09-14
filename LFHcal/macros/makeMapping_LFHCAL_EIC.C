@@ -21,9 +21,9 @@ void makeMapping_LFHCAL_EIC( TString setup="2x" )
 
   /* Detector envelope size (cone shape) */
   double lhcal_rmin1 = 0; // cm
-  double lhcal_rmax1 = 0; // cm
+  double lhcal_rmax1 = 262; // cm
   double lhcal_rmin2 = 0; // cm
-  double lhcal_rmax2 = 0; // cm
+  double lhcal_rmax2 = 262; // cm
   double lhcal_dz = 100; // cm
       
 
@@ -44,9 +44,7 @@ void makeMapping_LFHCAL_EIC( TString setup="2x" )
   if ( setup.Contains("2x") ){
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 14; // cm
-      lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 14; // cm
-      lhcal_rmax2 = 262; // cm
 
       /* Tower parameters */
       tower_dx = 2.5; // cm
@@ -55,17 +53,13 @@ void makeMapping_LFHCAL_EIC( TString setup="2x" )
 
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 14; // cm
-      lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 14; // cm
-      lhcal_rmax2 = 262; // cm
 
   } else if ( setup.Contains("FwdConfig") ) {
 
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 50; // cm
-      lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 50; // cm
-      lhcal_rmax2 = 262; // cm
       tower_dx = 5.535; // cm
       tower_dy = 5.535; // cm
 
@@ -73,24 +67,18 @@ void makeMapping_LFHCAL_EIC( TString setup="2x" )
 
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 50; // cm
-      lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 50; // cm
-      lhcal_rmax2 = 262; // cm
   } else if ( setup.Contains("IP6-asymmetric") ) {
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 17; // cm
-      lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 17; // cm
-      lhcal_rmax2 = 262; // cm
       
       offset_rmin_x = -10.0; // cm
       offset_rmin_y = 0.0; // cm
   } else if ( setup.Contains("asymmetric") ) {
       /* Detector envelope size (cone shape) */
       lhcal_rmin1 = 17; // cm
-      lhcal_rmax1 = 262; // cm
       lhcal_rmin2 = 17; // cm
-      lhcal_rmax2 = 262; // cm
       
       offset_rmin_x = 10.0; // cm
       offset_rmin_y = 0.0; // cm
@@ -123,10 +111,10 @@ void makeMapping_LFHCAL_EIC( TString setup="2x" )
   fout << "#Global detector geometry and transforamtion; lengths given in cm" << endl;
   fout << "Gtype " << 1 << endl;
   fout << "Gr1_inner " << lhcal_rmin1 << endl;
-  fout << "Gr1_outer " << lhcal_rmax1 << endl;
+  fout << "Gr1_outer " << lhcal_rmax1+0.1 << endl;
   fout << "Gr2_inner " << lhcal_rmin2 << endl;
-  fout << "Gr2_outer " << lhcal_rmax2 << endl;
-  fout << "Gdz " << lhcal_dz << endl;
+  fout << "Gr2_outer " << lhcal_rmax2+0.1 << endl;
+  fout << "Gdz " << lhcal_dz+0.1 << endl;
   fout << "Gx0 " << lhcal_x0 << endl;
   fout << "Gy0 " << lhcal_y0 << endl;
   fout << "Gz0 " << lhcal_z0 << endl;
