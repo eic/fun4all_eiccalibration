@@ -14,6 +14,7 @@ Grot_z 0
 Gtower2_dx 2.7675
 Gtower2_dy 2.7675
 Gtower2_dz 36.3
+tower_type 2
 #Tower type,idx_j,idx_k,idx_l,x[cm],y[cm],z[cm],dx[cm],dy[cm],dz[cm],rot_x,rot_y,rot_z
 Tower 2 0 58 0 -179.888 -19.3725 0 2.7675 2.7675 36.3 0 0 0
 Tower 2 0 59 0 -179.888 -16.605 0 2.7675 2.7675 36.3 0 0 0

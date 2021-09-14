@@ -16,6 +16,7 @@ Gtower2_dy 1.845
 Gtower2_dz 36.3
 xoffset -6.3
 yoffset 0
+tower_type 2
 #Tower type,idx_j,idx_k,idx_l,x[cm],y[cm],z[cm],dx[cm],dy[cm],dz[cm],rot_x,rot_y,rot_z
 Tower 2 0 81 0 -178.96500 -29.52000 0 1.84500 1.84500 36.3 0 0 0
 Tower 2 0 82 0 -178.96500 -27.67500 0 1.84500 1.84500 36.3 0 0 0

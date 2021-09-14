@@ -31,7 +31,8 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric_ROS" )
 
   double offset_rmin_x = 0.0; // cm
   double offset_rmin_y = 0.0; // cm
-
+  int towertype = 2;
+  
   cout << "Setup selected: " << setup << endl;
 
   if ( setup == "PHENIXEMCal" )
@@ -157,6 +158,7 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric_ROS" )
   fout << "Gtower2_dz " << tower_dz << endl;
   fout << "xoffset " << offset_rmin_x << endl;
   fout << "yoffset " << offset_rmin_y << endl;
+  fout << "tower_type " << towertype << endl;
 
   /* Tower mapping */
   fout << "#Tower type,idx_j,idx_k,idx_l,x[cm],y[cm],z[cm],dx[cm],dy[cm],dz[cm],rot_x,rot_y,rot_z" << endl;
@@ -173,7 +175,7 @@ void makeMapping_FEMC_EIC( TString setup="asymmetric_ROS" )
   cout << "n_towers_k = " << n_towers_k << endl;
   cout << "xpos_j0_k0 = " << xpos_j0_k0 << endl;
   cout << "ypos_j0_k0 = " << ypos_j0_k0 << endl;
-
+  
   unsigned int twr_count = 0;
   unsigned idx_l = 0;
   unsigned idtx_j = 0;
