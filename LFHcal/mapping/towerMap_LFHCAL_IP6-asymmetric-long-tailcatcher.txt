@@ -7,7 +7,7 @@ Gr2_outer 262.1
 Gdz 140.1
 Gx0 0
 Gy0 0
-Gz0 420
+Gz0 404
 Grot_x 0
 Grot_y 0
 Grot_z 0
@@ -16,7 +16,7 @@ Gtower_dy 5
 Gtower_dz 140
 # Layer settings for tower and longitudinal segmentation
 nlayerspertowerseg 10
-usetailcatcher 0
+usetailcatcher 1
 thickness_absorber 1.6
 thickness_scintillator 0.4
 xoffset -10
